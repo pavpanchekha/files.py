@@ -1,3 +1,8 @@
 dist
 doc/doc.zip
 *.pyc
+
+build
+bin
+include
+lib

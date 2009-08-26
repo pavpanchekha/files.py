@@ -1,10 +1,10 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 from distutils.core import setup
 
 data = {
     "name": "files",
-    "version": "1.1",
+    "version": "1.1.1",
     "description": "Python file and path manipulation",
     "license": "GNU GPL 3",
     "author": "Pavel Panchekha",
