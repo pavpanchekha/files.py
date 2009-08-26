@@ -1,0 +1,17 @@
+cd /tmp
+creat test
+echo Hello > test
+mv test bob
+echo Hello2 >> bob
+cp bob test
+echo Hello3 >> test
+echo ========== bob ==========
+cat bob
+echo ========== test =========
+cat test
+rm bob
+ln bob test
+rm bob
+ln -s bob test
+unlink bob
+rm test

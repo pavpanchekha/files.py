@@ -1,0 +1,216 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>files.Path &#8211; Path manipulation &mdash; files v1.0 documentation</title>
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '1.0',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="top" title="files v1.0 documentation" href="index.html" />
+    <link rel="next" title="files.File &#8211; File manipulation" href="file.html" />
+    <link rel="prev" title="files &#8211; Python File and Path manipulation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="file.html" title="files.File &#8211; File manipulation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="files &#8211; Python File and Path manipulation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">files v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  
+  <div class="section" id="files-path-path-manipulation">
+<h1><a title="(Windows, Unix) File, directory, and path manipulation" class="reference" href="index.html#module-files"><tt class="xref docutils literal"><span class="pre">files</span></tt></a>.<tt class="xref docutils literal"><span class="pre">Path</span></tt> &#8211; Path manipulation<a class="headerlink" href="#files-path-path-manipulation" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt>
+class <tt class="descclassname">files.</tt><tt class="descname">Path</tt><big>(</big><em>path</em><big>)</big></dt>
+<dd><p>The <tt class="xref docutils literal"><span class="pre">Path</span></tt> class provides functions for manipulating paths.</p>
+<p><em>path</em> should be a string, list, tuple, or <tt class="xref docutils literal"><span class="pre">Path</span></tt> object. Most
+likely, it will be a string, which creates a new <tt class="xref docutils literal"><span class="pre">Path</span></tt> object that
+represents that path. An example would be <tt class="docutils literal"><span class="pre">Path(&quot;/usr/bin&quot;)</span></tt>.</p>
+<p>Note that all new <tt class="xref docutils literal"><span class="pre">Path</span></tt> objects automatically:</p>
+<blockquote>
+<ul class="simple">
+<li>Expand <tt class="docutils literal"><span class="pre">~</span></tt> and <tt class="docutils literal"><span class="pre">~user</span></tt></li>
+<li>Expand <tt class="docutils literal"><span class="pre">$ENV_VAR</span></tt> and <tt class="docutils literal"><span class="pre">%WINDOWS_MUST_BE_DIFFERENT%</span></tt> variables</li>
+<li>Make the path absolute</li>
+<li>Remove double slashes (<tt class="docutils literal"><span class="pre">a//b</span></tt>), <tt class="docutils literal"><span class="pre">.</span></tt>&#8216;s, and <tt class="docutils literal"><span class="pre">..</span></tt>&#8216;s</li>
+<li>Normalizes case, if necessary.</li>
+</ul>
+</blockquote>
+<p>Symbolic links are not, however, removed from the path.</p>
+<p>The <tt class="xref docutils literal"><span class="pre">Path</span></tt> object can be used in <em>many</em> ways. Assuming <tt class="docutils literal"><span class="pre">path</span></tt> is
+<tt class="xref docutils literal"><span class="pre">Path</span></tt> object:</p>
+<blockquote>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">path</span> <span class="pre">+</span> <span class="pre">&quot;dir/dir&quot;</span></tt> &#8211; Paths can be added to strings to yield new paths</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">if</span> <span class="pre">path:</span> <span class="pre">...</span></tt> &#8211; Paths are <tt class="xref docutils literal"><span class="pre">True</span></tt> if they exist</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">len(path);</span> <span class="pre">path[i]</span></tt> &#8211; Paths can be used as a list. Note that for a
+Unix environment, <tt class="docutils literal"><span class="pre">Path[0]</span></tt> will be <tt class="docutils literal"><span class="pre">Path(/)</span></tt>. This can be a bit
+confusing. For example, <tt class="docutils literal"><span class="pre">Path(&quot;/usr/local/bin&quot;)[2]</span></tt> is
+<tt class="docutils literal"><span class="pre">Path(/usr/local)</span></tt>. Its as if <tt class="xref docutils literal"><span class="pre">Path</span></tt> objects use one-based
+indexing, and you can think of it that way if you want.</p>
+<p><tt class="docutils literal"><span class="pre">path[-1]</span> <span class="pre">=</span> <span class="pre">&quot;bob&quot;</span></tt> also works, as does
+<tt class="docutils literal"><span class="pre">path[1:4]</span> <span class="pre">=</span> <span class="pre">&quot;usr/local/share&quot;</span></tt>. So does <tt class="docutils literal"><span class="pre">del</span> <span class="pre">path[2]</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">&quot;file&quot;</span> <span class="pre">in</span> <span class="pre">path</span></tt> &#8211; Is a file in that path?</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">str(path)</span></tt> &#8211; Returns the path in string form. This always does not
+contain the final slash.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">with</span> <span class="pre">path:</span> <span class="pre">...</span></tt> &#8211; This will change directory to path before
+entering the with loop, and change back afterwards.</p>
+</li>
+</ul>
+</blockquote>
+<p>Of course, a :class:<tt class="docutils literal"><span class="pre">Path</span></tt> object also has some useful methods. These
+are detailed below.</p>
+<dl class="method">
+<dt id="files.Path.real">
+<!--[files.Path.real]--><tt class="descclassname">Path.</tt><tt class="descname">real</tt><big>(</big><big>)</big><a class="headerlink" href="#files.Path.real" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the <tt class="xref docutils literal"><span class="pre">Path</span></tt> object corresponding to the real path of the
+file or directory. This will resolve symbolic links.</dd></dl>
+
+<dl class="method">
+<dt id="files.Path.get">
+<!--[files.Path.get]--><tt class="descclassname">Path.</tt><tt class="descname">get</tt><big>(</big><big>)</big><a class="headerlink" href="#files.Path.get" title="Permalink to this definition">¶</a></dt>
+<dd>Returns the <tt class="xref docutils literal"><span class="pre">File</span></tt> or <tt class="xref docutils literal"><span class="pre">Dir</span></tt> object corresponding to the
+path.</dd></dl>
+
+<dl class="method">
+<dt id="files.Path.exists">
+<!--[files.Path.exists]--><tt class="descclassname">Path.</tt><tt class="descname">exists</tt><big>(</big><big>)</big><a class="headerlink" href="#files.Path.exists" title="Permalink to this definition">¶</a></dt>
+<dd>Returns <tt class="xref docutils literal"><span class="pre">True</span></tt> if the path exists, <tt class="xref docutils literal"><span class="pre">False</span></tt> if it does not.</dd></dl>
+
+<dl class="method">
+<dt id="files.Path.type">
+<!--[files.Path.type]--><tt class="descclassname">Path.</tt><tt class="descname">type</tt><big>(</big><big>)</big><a class="headerlink" href="#files.Path.type" title="Permalink to this definition">¶</a></dt>
+<dd>Returns a list that may contain any of <tt class="docutils literal"><span class="pre">&quot;file&quot;</span></tt>, <tt class="docutils literal"><span class="pre">&quot;dir&quot;</span></tt>,
+<tt class="docutils literal"><span class="pre">&quot;link&quot;</span></tt>, or <tt class="docutils literal"><span class="pre">&quot;mount&quot;</span></tt>. <tt class="docutils literal"><span class="pre">&quot;mount&quot;</span></tt> denotes a mount point on
+Unix-like systems.</dd></dl>
+
+<dl class="method">
+<dt id="files.Path.link">
+<!--[files.Path.link]--><tt class="descclassname">Path.</tt><tt class="descname">link</tt><big>(</big><em>dest</em><span class="optional">[</span>, <em>type=&quot;soft&quot;</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#files.Path.link" title="Permalink to this definition">¶</a></dt>
+<dd>Links the current path to <em>dest</em>. If <em>type</em> is <tt class="docutils literal"><span class="pre">&quot;soft&quot;</span></tt>, a symlink is
+created. Otherwise, a hardlink is made.</dd></dl>
+
+<dl class="method">
+<dt id="files.Path.link_from">
+<!--[files.Path.link_from]--><tt class="descclassname">Path.</tt><tt class="descname">link_from</tt><big>(</big><em>src</em><span class="optional">[</span>, <em>type=&quot;soft&quot;</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#files.Path.link_from" title="Permalink to this definition">¶</a></dt>
+<dd>Links <em>src</em> to the current path. <em>type</em> is identical to above.</dd></dl>
+
+<dl class="staticmethod">
+<dt id="files.Path.split">
+<!--[files.Path.split]--><em class="property">
+static </em><tt class="descclassname">Path.</tt><tt class="descname">split</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#files.Path.split" title="Permalink to this definition">¶</a></dt>
+<dd>Splits <em>path</em> (a string) into a list of directories.
+For example, <tt class="docutils literal"><span class="pre">&quot;/home/pavpan/&quot;</span></tt> becomes <tt class="docutils literal"><span class="pre">[&quot;/&quot;,</span> <span class="pre">&quot;home&quot;,</span> <span class="pre">&quot;pavpan&quot;]</span></tt>
+Wonder what happens to the drive letter on Windows...</dd></dl>
+
+<dl class="staticmethod">
+<dt id="files.Path.join">
+<!--[files.Path.join]--><em class="property">
+static </em><tt class="descclassname">Path.</tt><tt class="descname">join</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#files.Path.join" title="Permalink to this definition">¶</a></dt>
+<dd>Joins <em>path</em> (a list) into a path string.
+For example, <tt class="docutils literal"><span class="pre">[&quot;/&quot;,</span> <span class="pre">&quot;home&quot;,</span> <span class="pre">&quot;pavpan&quot;]</span></tt> becomes <tt class="docutils literal"><span class="pre">&quot;/home/pavpan&quot;</span></tt>.
+The final slash is always omitted.</dd></dl>
+
+<dl class="staticmethod">
+<dt id="files.Path.current">
+<!--[files.Path.current]--><em class="property">
+static </em><tt class="descclassname">Path.</tt><tt class="descname">current</tt><big>(</big><span class="optional">[</span><em>path=None</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#files.Path.current" title="Permalink to this definition">¶</a></dt>
+<dd>If <em>path</em> (a string or <tt class="xref docutils literal"><span class="pre">Path</span></tt>) is passed, changes the current
+directory to <em>path</em>. Otherwise, returns the current path, as a
+<tt class="xref docutils literal"><span class="pre">Path</span></tt>.</dd></dl>
+
+<dl class="staticmethod">
+<dt id="files.Path.setroot">
+<!--[files.Path.setroot]--><em class="property">
+static </em><tt class="descclassname">Path.</tt><tt class="descname">setroot</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#files.Path.setroot" title="Permalink to this definition">¶</a></dt>
+<dd>Changes the root directory (<tt class="docutils literal"><span class="pre">&quot;/&quot;</span></tt>) to <em>path</em> (a string or
+<tt class="xref docutils literal"><span class="pre">Path</span></tt>)</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="index.html" title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">files</span></tt> &#8211; Python File and Path manipulation</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="file.html" title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">files</span></tt>.<tt class="docutils literal docutils literal"><span class="pre">File</span></tt> &#8211; File manipulation</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/path.txt">Show Source</a></li>
+            </ul>
+          <h3>Quick search</h3>
+            <form class="search" action="search.html" method="get">
+              <input type="text" name="q" size="18" /> <input type="submit" value="Go" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="modindex.html" title="Global Module Index"
+             accesskey="M">modules</a> |</li>
+        <li class="right" >
+          <a href="file.html" title="files.File &#8211; File manipulation"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="files &#8211; Python File and Path manipulation"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">files v1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2008, Pavel Panchekha.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.5.1.
+    </div>
+  </body>
+</html>
